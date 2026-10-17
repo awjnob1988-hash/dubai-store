@@ -1,0 +1,634 @@
+{
+  "categories": [
+    {
+      "id": "phones",
+      "title": "الموبايلات",
+      "short": "موبايلات",
+      "sub": "آيفون وأجهزة التواصل اليومية",
+      "image": "iphone15.png",
+      "line": "جهاز يواكب يومك."
+    },
+    {
+      "id": "computers",
+      "title": "الحاسبات والشاشات",
+      "short": "الحاسبات",
+      "sub": "لابتوبات وشاشات للعمل والدراسة",
+      "image": "hp.jpg",
+      "line": "مساحتك للشغل والإبداع."
+    },
+    {
+      "id": "printing",
+      "title": "مستلزمات الطباعة",
+      "short": "الطباعة",
+      "sub": "طابعات منزلية وباركود للمتاجر",
+      "image": "epson.jpg",
+      "line": "كل فكرة، تستحق تنطبع."
+    },
+    {
+      "id": "gaming",
+      "title": "أجهزة الألعاب ومستلزماتها",
+      "short": "الألعاب",
+      "sub": "PlayStation وXbox وأيدي التحكم",
+      "image": "ps5.jpg",
+      "line": "جاهز للجولة الجاية؟"
+    },
+    {
+      "id": "cameras",
+      "title": "الكاميرات ومعدات التصوير",
+      "short": "الكاميرات",
+      "sub": "Canon وSony لصناعة المحتوى",
+      "image": "canon.jpg",
+      "line": "لحظتك، بتفاصيل أجمل."
+    },
+    {
+      "id": "electronics",
+      "title": "إلكترونيات وأجهزة وإكسسوارات",
+      "short": "الإلكترونيات",
+      "sub": "سماعات وشواحن ومستلزمات منزلية",
+      "image": "earbuds.jpg",
+      "line": "تفاصيل صغيرة، تفرق بيومك."
+    }
+  ],
+  "products": [
+    {
+      "id": "iphone15",
+      "name": "iPhone 15 Pro",
+      "brand": "Apple",
+      "type": "phone",
+      "image": "iphone15.png",
+      "variant": "256 GB",
+      "description": "خيار لمحبي التصوير والأداء القوي، بتصميم تيتانيوم ومنفذ USB-C. مناسب للتطبيقات الثقيلة والتصوير اليومي وتحرير المحتوى.",
+      "specs": [
+        [
+          "الشاشة",
+          "6.1 بوصة · OLED · حتى 120Hz"
+        ],
+        [
+          "المعالج",
+          "Apple A17 Pro"
+        ],
+        [
+          "التخزين المعروض",
+          "256 GB"
+        ],
+        [
+          "الكاميرا الرئيسية",
+          "48 MP"
+        ],
+        [
+          "الاتصال والشحن",
+          "5G · USB-C"
+        ]
+      ],
+      "prices": {
+        "new": [
+          1000000,
+          1300000
+        ],
+        "used": [
+          750000,
+          950000
+        ]
+      },
+      "source": "https://support.apple.com/en-us/111829",
+      "market": "https://iq.opensooq.com/en/mobile-phones-tablets/mobile-phones/mobiles-apple/iphone-15-pro",
+      "category": "phones",
+      "sub": "آيفون"
+    },
+    {
+      "id": "iphone13",
+      "name": "iPhone 13",
+      "brand": "Apple",
+      "type": "phone",
+      "image": "iphone13.png",
+      "variant": "128 GB",
+      "description": "موبايل عملي للاستخدام اليومي والتواصل والتصوير، بشاشة OLED ومعالج A15 Bionic. خيار لمن يريد تجربة آيفون بميزانية أقل.",
+      "specs": [
+        [
+          "الشاشة",
+          "6.1 بوصة · Super Retina XDR"
+        ],
+        [
+          "المعالج",
+          "Apple A15 Bionic"
+        ],
+        [
+          "التخزين المعروض",
+          "128 GB"
+        ],
+        [
+          "الكاميرات الخلفية",
+          "مزدوجة · 12 MP"
+        ],
+        [
+          "الاتصال والشحن",
+          "5G · Lightning"
+        ]
+      ],
+      "prices": {
+        "new": [
+          550000,
+          750000
+        ],
+        "used": [
+          350000,
+          500000
+        ]
+      },
+      "source": "https://support.apple.com/en-us/111872",
+      "market": "https://iq.opensooq.com/en/mobile-phones-tablets/mobile-phones/mobiles-apple/iphone-13/128-gb",
+      "category": "phones",
+      "sub": "آيفون"
+    },
+    {
+      "id": "canon",
+      "name": "Canon EOS R50",
+      "brand": "Canon",
+      "type": "camera",
+      "image": "canon.jpg",
+      "variant": "Twin Kit · 18–45 + 55–210 mm",
+      "description": "كاميرا ميرورلس خفيفة للصور والفيديو، مناسبة للتعلم وصناعة المحتوى. النطاق المعروض لطقم عدستين، ويختلف عن سعر الهيكل وحده.",
+      "specs": [
+        [
+          "المستشعر",
+          "APS-C · 24.2 MP"
+        ],
+        [
+          "الفيديو",
+          "4K حتى 30 إطار/ثانية"
+        ],
+        [
+          "الشاشة",
+          "متحركة قابلة للمس"
+        ],
+        [
+          "نوع العدسة",
+          "Canon RF / RF-S"
+        ],
+        [
+          "الطقم المسعّر",
+          "RF-S 18–45 + RF-S 55–210 mm"
+        ]
+      ],
+      "prices": {
+        "new": [
+          1250000,
+          1450000
+        ],
+        "used": [
+          850000,
+          1150000
+        ]
+      },
+      "source": "https://www.canon.com.au/cameras/eos-r50",
+      "market": "https://store.alafrah.iq/product/canon-r50-18-45-rf55-210s-twin-kit/",
+      "category": "cameras",
+      "sub": "كاميرات ميرورلس"
+    },
+    {
+      "id": "sony",
+      "name": "Sony ZV-E10",
+      "brand": "Sony",
+      "type": "camera",
+      "image": "sony.jpg",
+      "variant": "Kit · 16–50 mm",
+      "description": "كاميرا موجهة للفلوغ وصناعة المحتوى، بمستشعر APS-C وعدسات قابلة للتبديل. الشاشة المتحركة تسهّل تصوير نفسك والمنتجات.",
+      "specs": [
+        [
+          "المستشعر",
+          "APS-C · 24.2 MP"
+        ],
+        [
+          "الفيديو",
+          "4K حتى 30 إطار/ثانية"
+        ],
+        [
+          "الشاشة",
+          "جانبية متحركة"
+        ],
+        [
+          "نوع العدسة",
+          "Sony E-mount"
+        ],
+        [
+          "الطقم المسعّر",
+          "عدسة 16–50 mm"
+        ]
+      ],
+      "prices": {
+        "new": [
+          900000,
+          1100000
+        ],
+        "used": [
+          600000,
+          800000
+        ]
+      },
+      "source": "https://www.sony.ca/en/electronics/support/e-mount-body-zv-e-series/zv-e10/specifications",
+      "market": "https://store.alafrah.iq/product/sony-zv-e10-mirrorless-camera-with-16-50mm-lens/",
+      "category": "cameras",
+      "sub": "كاميرات ميرورلس"
+    },
+    {
+      "id": "hp",
+      "name": "HP 15-FD0005DX",
+      "brand": "HP",
+      "category": "computers",
+      "sub": "لابتوبات",
+      "image": "hp.jpg",
+      "variant": "Core i5 · 512GB SSD · الذاكرة حسب النسخة",
+      "description": "لابتوب للدراسة والعمل اليومي، مع شاشة لمس وذاكرة مناسبة لتعدد المهام. خيار للمستندات والاجتماعات والتصفح.",
+      "specs": [
+        [
+          "الشاشة",
+          "15.6 بوصة · لمس"
+        ],
+        [
+          "المعالج",
+          "Intel Core i5-1235U"
+        ],
+        [
+          "الذاكرة",
+          "8 أو 16 GB حسب النسخة؛ تُؤكّد قبل الشراء"
+        ],
+        [
+          "التخزين",
+          "512 GB SSD"
+        ]
+      ],
+      "prices": {
+        "new": [
+          540000,
+          650000
+        ],
+        "used": [
+          350000,
+          480000
+        ]
+      },
+      "source": "https://www.estore.iq/shop/hp-15-6-touch-screen-15-fd0005dx-laptop-6795",
+      "market": "https://www.estore.iq/shop/hp-15-6-touch-screen-15-fd0005dx-laptop-6795"
+    },
+    {
+      "id": "monitor",
+      "name": "Acer Nitro VG240Y M3",
+      "brand": "Acer",
+      "category": "computers",
+      "sub": "شاشات",
+      "image": "monitor.jpg",
+      "variant": "23.8″ · FHD · 180Hz",
+      "description": "شاشة للألعاب والعمل، بلوحة IPS ومعدل تحديث مرتفع. تأكد من منافذ جهازك والكابل المناسب قبل الشراء.",
+      "specs": [
+        [
+          "الحجم",
+          "23.8 بوصة"
+        ],
+        [
+          "الدقة",
+          "1920 × 1080 · Full HD"
+        ],
+        [
+          "اللوحة",
+          "IPS"
+        ],
+        [
+          "التحديث",
+          "حتى 180 Hz"
+        ]
+      ],
+      "prices": {
+        "new": [
+          150000,
+          190000
+        ],
+        "used": [
+          100000,
+          140000
+        ]
+      },
+      "source": "https://store.acer.com/en-us/23-8-nitro-vg0-gaming-monitor-vg240y-m3biip",
+      "market": "https://www.estore.iq/shop/acer-nitro-24-vg240y-m3-ips-gaming-monitor-38203"
+    },
+    {
+      "id": "epson",
+      "name": "Epson EcoTank L3250",
+      "brand": "Epson",
+      "category": "printing",
+      "sub": "طابعات متعددة الوظائف",
+      "image": "epson.jpg",
+      "variant": "Wi-Fi · ألوان",
+      "description": "طابعة بخزانات حبر لإتمام مهام الطباعة المنزلية والدراسة، وتجمع الطباعة والنسخ والمسح الضوئي في جهاز واحد.",
+      "specs": [
+        [
+          "الوظائف",
+          "طباعة · نسخ · مسح ضوئي"
+        ],
+        [
+          "الألوان",
+          "طباعة ملونة"
+        ],
+        [
+          "الاتصال",
+          "Wi-Fi"
+        ],
+        [
+          "نظام الحبر",
+          "EcoTank · خزانات قابلة للتعبئة"
+        ]
+      ],
+      "prices": {
+        "new": [
+          280000,
+          340000
+        ],
+        "used": [
+          180000,
+          250000
+        ]
+      },
+      "source": "https://files.support.epson.com/docid/cpd6/cpd60185/helpcontents.html",
+      "market": "https://store.alnabaa.com/products/epson-ecotank-l3250-wi-fi-all-in-one-ink-tank-printer"
+    },
+    {
+      "id": "xprinter",
+      "name": "Xprinter XP-350BM",
+      "brand": "Xprinter",
+      "category": "printing",
+      "sub": "طابعات باركود",
+      "image": "xprinter.jpg",
+      "variant": "طباعة حرارية · 80 mm",
+      "description": "طابعة ملصقات حرارية لتنظيم المنتجات والباركود في المتاجر. تأكد من مقاس الملصق والواجهة المتوفرة في النسخة المطلوبة.",
+      "specs": [
+        [
+          "الاستخدام",
+          "ملصقات وباركود"
+        ],
+        [
+          "التقنية",
+          "طباعة حرارية مباشرة"
+        ],
+        [
+          "الفئة",
+          "3 بوصات"
+        ],
+        [
+          "السرعة القصوى",
+          "حتى 152 mm/s"
+        ]
+      ],
+      "prices": {
+        "new": [
+          90000,
+          150000
+        ],
+        "used": [
+          60000,
+          100000
+        ]
+      },
+      "source": "https://www.xprintertech.com/xp-350b/xp-350bm",
+      "market": "https://nine-soft.com/shop/xprinter-80mm-58"
+    },
+    {
+      "id": "ps5",
+      "name": "PlayStation 5 Slim",
+      "brand": "Sony",
+      "category": "gaming",
+      "sub": "أجهزة الألعاب",
+      "image": "ps5.jpg",
+      "variant": "1 TB · Disc Edition",
+      "description": "جهاز ألعاب بذاكرة SSD وقارئ أقراص. مناسب لمن يريد الألعاب الرقمية والأقراص، مع التأكد من المنطقة والملحقات عند الطلب.",
+      "specs": [
+        [
+          "التخزين",
+          "1 TB SSD"
+        ],
+        [
+          "الإصدار",
+          "قارئ أقراص"
+        ],
+        [
+          "وحدة التحكم",
+          "DualSense"
+        ],
+        [
+          "المنطقة",
+          "تُؤكّد عند الطلب"
+        ]
+      ],
+      "prices": {
+        "new": [
+          900000,
+          1050000
+        ],
+        "used": [
+          650000,
+          850000
+        ]
+      },
+      "source": "https://www.playstation.com/en-ae/ps5/buy-now/",
+      "market": "https://www.estore.iq/ar/shop/playstation-5-slim-r1-us-16508"
+    },
+    {
+      "id": "xbox",
+      "name": "Xbox Series S",
+      "brand": "Microsoft",
+      "category": "gaming",
+      "sub": "أجهزة الألعاب",
+      "image": "xbox.jpg",
+      "variant": "512 GB · Digital",
+      "description": "جهاز ألعاب رقمي بتصميم مدمج. تُشترى الألعاب والاشتراكات بصورة منفصلة، ولا يدعم أقراص الألعاب.",
+      "specs": [
+        [
+          "التخزين",
+          "512 GB SSD"
+        ],
+        [
+          "الإصدار",
+          "رقمي بالكامل"
+        ],
+        [
+          "الأقراص",
+          "غير مدعومة"
+        ],
+        [
+          "المحتوى",
+          "الألعاب والاشتراكات غير مشمولة"
+        ]
+      ],
+      "prices": {
+        "new": [
+          480000,
+          580000
+        ],
+        "used": [
+          280000,
+          400000
+        ]
+      },
+      "source": "https://www.xbox.com/en-hk/consoles/xbox-series-s?xr=shellnav",
+      "market": "https://www.estore.iq/ar/shop/xbox-series-s-2587"
+    },
+    {
+      "id": "dualsense",
+      "name": "Sony DualSense",
+      "brand": "Sony",
+      "category": "gaming",
+      "sub": "أيدي التحكم",
+      "image": "dualsense.jpg",
+      "variant": "يد تحكم لاسلكية",
+      "description": "يد تحكم لبلايستيشن 5 مع مؤثرات لمسية وأزرار زناد تكيفية في الألعاب الداعمة. يمكن الاستفسار عن الألوان المتوفرة.",
+      "specs": [
+        [
+          "الفئة",
+          "يد تحكم"
+        ],
+        [
+          "التوافق الأساسي",
+          "PlayStation 5"
+        ],
+        [
+          "الاتصال",
+          "لاسلكي / USB-C"
+        ],
+        [
+          "اللون",
+          "حسب المتوفر"
+        ]
+      ],
+      "prices": {
+        "new": [
+          95000,
+          125000
+        ],
+        "used": [
+          50000,
+          80000
+        ]
+      },
+      "source": "https://www.playstation.com/en-us/accessories/dualsense-wireless-controller/",
+      "market": "https://www.estore.iq/shop/games-world-32/sony-playstation-5-dualsense-wireless-controller-5199"
+    },
+    {
+      "id": "earbuds",
+      "name": "Soundcore R50i",
+      "brand": "Soundcore",
+      "category": "electronics",
+      "sub": "سماعات",
+      "image": "earbuds.jpg",
+      "variant": "سماعات لاسلكية",
+      "description": "سماعات أذن لاسلكية للاستخدام اليومي والمكالمات، مع علبة شحن. تُؤكّد نسخة المنتج واللون والضمان قبل الشراء.",
+      "specs": [
+        [
+          "النوع",
+          "سماعات أذن لاسلكية"
+        ],
+        [
+          "الاتصال",
+          "Bluetooth"
+        ],
+        [
+          "الملحق الأساسي",
+          "علبة شحن"
+        ],
+        [
+          "الموديل",
+          "R50i · النسخة العادية"
+        ]
+      ],
+      "prices": {
+        "new": [
+          25000,
+          35000
+        ],
+        "used": [
+          15000,
+          22000
+        ]
+      },
+      "source": "https://www.soundcore.com.tw/products/soundcore-r50i",
+      "market": "https://bytestoreiq.com/products/anker-soundcore-r50i-earbuds"
+    },
+    {
+      "id": "charger",
+      "name": "Anker Zolo 20W",
+      "brand": "Anker",
+      "category": "electronics",
+      "sub": "شواحن ومستلزمات",
+      "image": "charger.jpg",
+      "variant": "USB-C · PD 3.0",
+      "description": "شاحن جداري صغير للأجهزة المتوافقة. سرعة الشحن الفعلية تعتمد على الجهاز والكابل؛ تأكد من نوع القابس ووجود الكابل عند الطلب.",
+      "specs": [
+        [
+          "القدرة",
+          "حتى 20 W"
+        ],
+        [
+          "المنفذ",
+          "USB-C"
+        ],
+        [
+          "البروتوكول",
+          "PD 3.0"
+        ],
+        [
+          "القابس والكابل",
+          "يُؤكّدان حسب النسخة"
+        ]
+      ],
+      "prices": {
+        "new": [
+          15000,
+          22000
+        ],
+        "used": [
+          8000,
+          12000
+        ]
+      },
+      "source": "https://www.estore.iq/shop/anker-zolo-charger-20w-pd-3-0-7031",
+      "market": "https://www.estore.iq/shop/anker-zolo-charger-20w-pd-3-0-7031"
+    },
+    {
+      "id": "vacuum",
+      "name": "Eufy G50 Hybrid",
+      "brand": "Eufy",
+      "category": "electronics",
+      "sub": "مستلزمات منزلية",
+      "image": "vacuum.jpg",
+      "variant": "مكنسة روبوتية",
+      "description": "مكنسة روبوتية تجمع الشفط والمسح الخفيف للأرضيات. مناسبة لتسهيل التنظيف اليومي مع التأكد من الملحقات وحالة البطارية.",
+      "specs": [
+        [
+          "النوع",
+          "مكنسة روبوتية"
+        ],
+        [
+          "الوظائف",
+          "شفط ومسح خفيف"
+        ],
+        [
+          "اللون",
+          "أسود"
+        ],
+        [
+          "الموديل",
+          "G50 Hybrid"
+        ]
+      ],
+      "prices": {
+        "new": [
+          220000,
+          290000
+        ],
+        "used": [
+          140000,
+          200000
+        ]
+      },
+      "source": "https://www.estore.iq/ar/shop/t2212v11-eufy-g50-hybrid-robot-vacuum-cleaner-black-51560",
+      "market": "https://www.estore.iq/ar/shop/t2212v11-eufy-g50-hybrid-robot-vacuum-cleaner-black-51560"
+    }
+  ]
+}
