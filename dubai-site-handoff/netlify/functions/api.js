@@ -1,6 +1,6 @@
 'use strict';
 const crypto=require('node:crypto');
-const {getStore}=require('@netlify/blobs');
+const {getStore,connectLambda}=require('@netlify/blobs');
 const original=require('../../catalog.json');
 const data=()=>getStore({name:'dubai-store-products',consistency:'strong'});
 const pictures=()=>getStore({name:'dubai-store-pictures',consistency:'strong'});
@@ -38,6 +38,8 @@ if(JSON.stringify(c).length>800000)throw Error('المعلومات كبيرة ج
 exports.handler=async ev=>{
 let method=ev.httpMethod,action=ev.queryStringParameters?.action||'',conf=env();
 try{
+// Lambda-compatible Netlify Functions must connect the request before using Blobs.
+connectLambda(ev);
 if(method==='GET'&&action==='store')return response(200,(await current()).catalog);
 if(method==='GET'&&action==='image'){
 let file=ev.queryStringParameters?.file||'';if(!/^uploads\/[a-z0-9-]{15,55}\.(png|jpg|jpeg|webp|gif)$/i.test(file))return error(404,'الصورة غير موجودة');
