@@ -44,7 +44,7 @@ function el(selector){
  return nodes.get(selector);
 }
 const document={querySelector:el,querySelectorAll(){return []}};
-const wrapper=js.replace(/^\(function\(\)\{/,'return (function(){').replace(/\}\)\(\);\s*$/,'return {setCatalog(value){catalog=value},setView(value){view=value},render,open,conditionOf};})();');
+const wrapper=js.replace('(function(){','return (function(){').replace(/\}\)\(\);\s*$/,'return {setCatalog(value){catalog=value},setView(value){view=value},render,open,conditionOf};})();');
 const runtime=new Function('document','sessionStorage','fetch',wrapper)(
  document,
  {getItem(){return null},setItem(){},removeItem(){}},
