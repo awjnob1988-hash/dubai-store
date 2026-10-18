@@ -13,6 +13,7 @@ if(tiles&&!tiles.querySelector('a[href="/'+c.id+'/"]'))tiles.insertAdjacentHTML(
 });
 let settings=window.CATALOG.site||{};if(settings.whatsapp){document.querySelectorAll('a[href^="https://wa.me/"]').forEach(a=>{a.href=a.href.replace(/wa\.me\/\d+/, 'wa.me/'+settings.whatsapp)})}
 if(settings.name)document.querySelectorAll('.brand b').forEach(e=>e.textContent=settings.name);
+if(settings.heroImage&&document.querySelector('.hero-real')){const hero=document.querySelector('.hero-real');hero.src=pic(settings.heroImage);hero.alt='صورة واجهة متجر معرض دبي'}
 if(settings.heroTitle&&document.querySelector('.hero h1'))document.querySelector('.hero h1').textContent=settings.heroTitle;
 if(settings.heroDescription&&document.querySelector('.hero-copy p'))document.querySelector('.hero-copy p').textContent=settings.heroDescription;
 };
