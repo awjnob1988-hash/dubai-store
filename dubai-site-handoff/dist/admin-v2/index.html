@@ -10,13 +10,13 @@
 <script>
 (function(){
 'use strict';
-var api='/api/data?action=',token=sessionStorage.getItem('dubai-admin-v2-token')||'',catalog=null,version='',view='overview',editing=null,kind='';
+var api='/api/data?action=',token=sessionStorage.getItem('dubai-admin-v2-token')||'',catalog=null,version='',view='overview',editing=null,kind='',imported=true;
 var $=s=>document.querySelector(s),escape=s=>String(s??'').replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
 function photo(s){return String(s||'').startsWith('uploads/')?api+'image&file='+encodeURIComponent(s):'/assets/'+encodeURIComponent(s||'iphone15.png')}
 function note(msg,bad){let el=$('#notice');el.style.display='block';el.className='status'+(bad?' error':'');el.textContent=msg;setTimeout(()=>{if(el.textContent===msg)el.style.display='none'},6500)}
 async function request(action,body){let h={'Accept':'application/json'};if(token)h.Authorization='Bearer '+token;if(body!==undefined)h['Content-Type']='application/json';let r=await fetch(api+action,{method:body===undefined?'GET':'POST',headers:h,body:body===undefined?undefined:JSON.stringify(body),cache:'no-store'});let d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||'تعذر الاتصال بالخادم');return d}
 function showapp(on){$('#login').classList.toggle('hide',on);$('#application').classList.toggle('hide',!on)}
-async function load(){let r=await request('workspace');catalog=r.catalog;version=r.version;showapp(true);render()}
+async function load(){let r=await request('workspace');catalog=r.catalog;version=r.version;imported=r.imported!==false;showapp(true);render()}
 async function login(e){e.preventDefault();$('#login-msg').textContent='جارٍ تسجيل الدخول...';try{let r=await request('login',{username:$('#username').value,password:$('#password').value});token=r.token;sessionStorage.setItem('dubai-admin-v2-token',token);$('#password').value='';await load()}catch(err){$('#login-msg').textContent=err.message}}
 $('#login-form').addEventListener('submit',login);
 $('#logout').onclick=()=>{token='';sessionStorage.removeItem('dubai-admin-v2-token');showapp(false)};
@@ -39,7 +39,7 @@ let out='',visible=catalog.products.filter(p=>p.active!==false);
 if(view==='overview'){
  const used=catalog.products.filter(p=>conditionOf(p)==='used').length;
  const stats=[['إجمالي المنتجات',catalog.products.length,'▣'],['الأقسام والتصنيفات',catalog.categories.length,'▤'],['المنتجات المنشورة',visible.length,'✓'],['الأجهزة المستعملة',used,'◷']];
- out='<div class="stats">'+stats.map((s,i)=>'<div class="stat '+(i===2?'accent':'')+'"><small>'+s[0]+'</small><span class="stat-ico">'+s[2]+'</span><strong>'+s[1]+'</strong></div>').join('')+'</div>';
+ out=(!imported?'<section class="panel" style="margin-top:0;border-color:#f8d4a5;background:#fffdf6"><h2 style="margin:0 0 7px">جاهز لاستيراد بيانات معرض دبي</h2><p class="panel-note">هذه نسخة جديدة على Cloudflare. قبل تعديل المنتجات، انسخ بيانات وصور المتجر الحالي من Netlify مرة واحدة بأمان.</p><div style="margin-top:12px"><button class="primary" id="import-legacy">استيراد المنتجات والصور من الموقع القديم ←</button></div></section>':'')+'<div class="stats">'+stats.map((s,i)=>'<div class="stat '+(i===2?'accent':'')+'"><small>'+s[0]+'</small><span class="stat-ico">'+s[2]+'</span><strong>'+s[1]+'</strong></div>').join('')+'</div>';
  out+='<div class="dashboard-grid"><section class="panel"><div class="sectionhead"><div><h2>إدارة سريعة</h2><p>ابدأ بإضافة منتج أو تنظيم أقسام المعرض</p></div></div><div class="quick-actions"><button class="primary" id="quick-product">＋ إضافة منتج جديد</button><button class="secondary" id="quick-category">＋ إضافة قسم جديد</button></div><div class="quick-help">تظهر التغييرات في المتجر بعد الضغط على «حفظ ونشر». ويمكنك تحديث البيانات بأمان في أي وقت.</div></section>';
  out+='<section class="panel"><div class="sectionhead"><div><h2>آخر المنتجات</h2><p>أحدث العناصر في المتجر</p></div></div><div class="mini-list">'+catalog.products.slice(0,4).map(p=>'<div class="mini-item"><img src="'+escape(photo(p.image))+'" alt=""><div class="txt"><b>'+escape(p.name)+'</b><span>'+escape(catalog.categories.find(c=>c.id===p.category)?.title||'')+' · '+(conditionOf(p)==='used'?'مستعمل':conditionOf(p)==='new'?'جديد':'جديد ومستعمل')+'</span></div><button class="secondary" data-overview-edit="'+escape(p.id)+'">تعديل</button></div>').join('')+'</div></section></div>';
 }
@@ -66,6 +66,7 @@ if(view==='media'){
  out+='<form id="media-form"><div class="setting-block"><h3>الصورة الرئيسية</h3><div class="setting-grid"><div class="field"><label for="hero-image">رفع صورة جديدة</label><input id="hero-image" name="hero" type="file" accept="image/png,image/jpeg,image/webp"><p class="hint">PNG أو JPG أو WebP، بحجم أقل من 2 ميغابايت</p></div><div class="field"><label>معاينة الصورة الحالية</label><img id="hero-preview" alt="صورة واجهة المتجر" src="'+escape(photo(img||'iphone15.png'))+'" style="height:180px;width:100%;object-fit:contain;border:1px solid #e4eaf2;border-radius:12px;background:#fff;padding:10px"></div></div><p class="panel-note">إذا ما رفعت صورة جديدة، يبقى التصميم كما هو.</p></div><div class="setting-actions"><button class="primary" type="submit">حفظ صورة الواجهة ←</button></div></form></section>';
 }
 $('#content').innerHTML=out;
+if($('#import-legacy'))$('#import-legacy').onclick=async()=>{if(!confirm('تريد تنسخ المنتجات والصور من موقع Netlify إلى Cloudflare؟ يتم الاستيراد مرة واحدة، ولن يحذف بيانات موقعك القديم.'))return;const btn=$('#import-legacy');btn.disabled=true;btn.textContent='جارٍ استيراد المنتجات والصور...';try{const x=await request('import',{});await load();note('نجح الاستيراد: '+x.products+' منتج و'+x.images+' صورة')}catch(e){btn.disabled=false;btn.textContent='إعادة محاولة الاستيراد';note(e.message,true)}};
 if($('#quick-product'))$('#quick-product').onclick=()=>open('product');
 if($('#quick-category'))$('#quick-category').onclick=()=>open('category');
 if($('#add-product'))$('#add-product').onclick=()=>open('product');
