@@ -90,23 +90,39 @@ function checkBinary(bin,ext){
   if(ext==='webp')return String.fromCharCode(...a.slice(0,4))==='RIFF' && String.fromCharCode(...a.slice(8,12))==='WEBP';
   return a[0]===255&&a[1]===216&&a[2]===255;
 }
-async function copyFromNetlify(env){
-  const response=await fetch(SOURCE+'/api/data?action=store',{headers:{accept:'application/json'},redirect:'error'});
-  if(!response.ok)throw Error('Could not read old public catalog');
-  const cat=await response.json();validate(cat);
+async function legacySnapshot(){
+  let response;
+  try {
+    response=await fetch(SOURCE+'/api/data?action=store',{headers:{accept:'application/json'},redirect:'follow'});
+  } catch(e) {
+    console.error('Import source connection failed:',e);
+    throw Error('تعذر الاتصال بموقع Netlify القديم من Cloudflare. سنتحقق من رابط البيانات.');
+  }
+  if(!response.ok)throw Error('موقع Netlify القديم لم يُرجع المنتجات (HTTP '+response.status+').');
+  if(new URL(response.url).hostname!=='dubai-store-iq.netlify.app')throw Error('رابط البيانات القديمة حوّل الاتصال إلى موقع غير متوقع.');
+  let cat;
+  try{cat=await response.json()}catch(e){throw Error('رد Netlify لا يحتوي على بيانات منتجات JSON صالحة.')}
+  try{validate(cat)}catch(e){console.error('Import catalog validation:',e);throw Error('ملف المنتجات القديم يحتاج تصحيح: '+String(e?.message||'بيانات غير صالحة').slice(0,110))}
+  const paths=[...new Set([...cat.products.map(p=>p.image),...cat.categories.map(c=>c.image),cat.site?.heroImage].filter(x=>uploadPath.test(x||'')))];
+  if(paths.length>40)throw Error('عدد صور المنتجات المرفوعة يتجاوز 40. يلزم استيراد على دفعات.');
+  return {catalog:cat,paths};
+}
+async function copyFromNetlify(env,snapshot){
+  const {catalog:cat,paths}=snapshot||await legacySnapshot();
   // Copy user-uploaded pictures before committing catalog to the new database.
-  const paths=new Set([...cat.products.map(p=>p.image),...cat.categories.map(c=>c.image),cat.site?.heroImage].filter(x=>uploadPath.test(x||'')));
-  if(paths.size>40)throw Error('More than 40 images: import requires batching');
   for(const name of paths){
-    const link=SOURCE+'/api/data?action=image&file='+encodeURIComponent(name);
-    const r=await fetch(link,{redirect:'error'});
-    if(!r.ok)throw Error('Could not copy image');
+    let r;
+    try {r=await fetch(SOURCE+'/api/data?action=image&file='+encodeURIComponent(name),{redirect:'follow'});}
+    catch(e){console.error('Import image fetch failed:',name,e);throw Error('تعذر جلب صورة من المتجر القديم: '+name)}
+    if(!r.ok)throw Error('الصورة القديمة غير متاحة (HTTP '+r.status+'): '+name);
+    if(new URL(r.url).hostname!=='dubai-store-iq.netlify.app')throw Error('رابط الصورة القديمة حوّل الاتصال إلى موقع غير متوقع.');
     const buf=await r.arrayBuffer();
     const ext=name.split('.').pop().toLowerCase();
-    if(!checkBinary(buf,ext))throw Error('Unexpected image format');
-    await env.MEDIA.put(name,buf,{metadata:{type:mime(name)}});
+    if(!checkBinary(buf,ext))throw Error('الصورة القديمة غير سليمة أو أكبر من 2 ميغابايت: '+name);
+    try {await env.MEDIA.put(name,buf,{metadata:{type:mime(name)}});}
+    catch(e){console.error('Import KV failed:',name,e);throw Error('تعذر حفظ الصورة في Cloudflare KV: '+name)}
   }
-  return {catalog:cat,images:paths.size};
+  return {catalog:cat,images:paths.length};
 }
 async function endpoint(request,env){
   const url=new URL(request.url),action=url.searchParams.get('action')||'';
@@ -143,12 +159,21 @@ async function endpoint(request,env){
     await env.MEDIA.put(name,bin.buffer,{metadata:{type:mime(name)}});
     return json({image:name});
   }
-  if(request.method==='POST'&&action==='import'){
+  if(request.method==='POST'&&(action==='import-preflight'||action==='import')){
+    // Both operations require the admin session checked above.
     const exists=await env.DB.prepare("SELECT version FROM shop_catalog WHERE id='live'").first();
-    if(exists)return failure('تم الاستيراد من قبل؛ لن نستبدل تعديلات المتجر',409);
-    const copied=await copyFromNetlify(env);
-    const result=await env.DB.prepare("INSERT OR IGNORE INTO shop_catalog(id,value,version) VALUES ('live',?,1)").bind(JSON.stringify(copied.catalog)).run();
-    if(!result.meta?.changes)return failure('المتجر كان قد استُورد بالفعل',409);
+    if(exists)return failure('تم استيراد المنتجات بالفعل. لا نكتب فوق بيانات المتجر الحالية.',409);
+    let snapshot;
+    try {snapshot=await legacySnapshot();}
+    catch(e){console.error('Dubai import preflight:',e);return failure(String(e.message||'تعذر فحص المصدر').slice(0,230),502)}
+    if(action==='import-preflight')return json({ready:true,products:snapshot.catalog.products.length,categories:snapshot.catalog.categories.length,images:snapshot.paths.length});
+    let copied;
+    try {copied=await copyFromNetlify(env,snapshot);}
+    catch(e){console.error('Dubai images import:',e);return failure(String(e.message||'تعذر استيراد الصور').slice(0,230),502)}
+    try {
+      const result=await env.DB.prepare("INSERT OR IGNORE INTO shop_catalog(id,value,version) VALUES ('live',?,1)").bind(JSON.stringify(copied.catalog)).run();
+      if(!result.meta?.changes)return failure('المتجر كان قد استُورد بالفعل',409);
+    }catch(e){console.error('Dubai database import:',e);return failure('تعذر حفظ كتالوج المنتجات في Cloudflare D1.',502)}
     return json({success:true,products:copied.catalog.products.length,images:copied.images});
   }
   if(request.method==='POST'&&action==='publish'){
