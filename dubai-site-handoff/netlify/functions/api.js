@@ -46,9 +46,9 @@ let type=/\.png$/i.test(file)?'image/png':/\.webp$/i.test(file)?'image/webp':/\.
 return{statusCode:200,isBase64Encoded:true,headers:{'Content-Type':type,'Cache-Control':'public, max-age=3600','X-Content-Type-Options':'nosniff'},body:Buffer.from(b).toString('base64')};
 }
 if(method==='GET'&&action==='status'){
-let storage='ok';
-try{await current()}catch(e){storage='error';console.error('Dubai admin store health:',e)}
-return response(200,{configured:conf.pass.length>=12&&conf.key.length>=32,passwordReady:conf.pass.length>=12,sessionReady:conf.key.length>=32,storage});
+let storage='ok',storageIssue=null;
+try{await current()}catch(e){storage='error';storageIssue={type:String(e?.name||'Error').replace(/[^a-zA-Z0-9]/g,'').slice(0,48),code:String(e?.code||'').replace(/[^a-zA-Z0-9_]/g,'').slice(0,48)};console.error('Dubai admin store health:',e)}
+return response(200,{configured:conf.pass.length>=12&&conf.key.length>=32,passwordReady:conf.pass.length>=12,sessionReady:conf.key.length>=32,storage,storageIssue});
 }
 if(conf.pass.length<12||conf.key.length<32)return error(503,'بيانات الحماية غير متاحة للوظيفة الخلفية؛ تأكد من كلمة مرور 12 حرفاً ورمز جلسة 32 حرفاً وصلاحية Functions ثم أعد النشر');
 let body={};if(method==='POST'){if((ev.body||'').length>5900000)return error(413,'حجم الملف كبير');try{body=JSON.parse(ev.body||'{}')}catch{return error(400,'الطلب غير صالح')}}
