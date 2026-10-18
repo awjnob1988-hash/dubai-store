@@ -10,7 +10,7 @@ const availableConditions=p=>{
 };
 const cleanlinessText=(p,c)=>c==='used'&&Number.isInteger(p.cleanliness)&&p.cleanliness>=1&&p.cleanliness<=100?'نظافة الجهاز: '+p.cleanliness+'%':'';
 const money=n=>n.toLocaleString('en-US');
-const price=(p,c)=>`من ${money(p.prices[c][0])} إلى ${money(p.prices[c][1])} د.ع`;
+const price=(p,c)=>p.prices[c][0]===p.prices[c][1]?`${money(p.prices[c][0])} د.ع`:`من ${money(p.prices[c][0])} إلى ${money(p.prices[c][1])} د.ع`;
 const link=(p,c)=>`/products/${p.id}/?condition=${c}`;
 const ask=(p,c)=>wa+encodeURIComponent(`مرحبا معرض دبي، أستفسر عن ${p.name} — ${p.variant} (${names[c]})${cleanlinessText(p,c)?'، '+cleanlinessText(p,c):''}. أحتاج السعر النهائي وصور القطعة وحالتها والملحقات، وهل متوفر؟`);
 function card(p,c){return `<article class="product"><a class="product-art photo-art" href="${link(p,c)}" aria-label="تفاصيل ${p.name} ${names[c]}"><span class="condition-tag ${c}">${names[c]}</span><img src="/assets/${p.image}" alt="صورة موديل ${p.name}" loading="lazy"><span class="photo-caption">صورة الموديل</span></a><div class="product-info"><span class="category">${p.brand} · ${p.variant}</span><h3><a href="${link(p,c)}">${p.name}</a></h3>${cleanlinessText(p,c)?'<div class="cleanliness-label">'+cleanlinessText(p,c)+'</div>':''}<p class="short-description">${p.description}</p><div class="price-label">سعر تقريبي · ${names[c]}</div><div class="price-range">${price(p,c)}</div><small class="availability">يُؤكّد التوفر من المعرض</small><a class="details-btn" href="${link(p,c)}">التفاصيل والمواصفات <span>←</span></a><a class="whatsapp-link" href="${ask(p,c)}" target="_blank" rel="noopener">استفسر على واتساب ↗</a></div></article>`}
