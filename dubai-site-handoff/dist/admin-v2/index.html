@@ -101,17 +101,20 @@ function toggleConditionFields(){
 }
 function open(t,id){kind=t;editing=id||null;let obj=t==='product'?catalog.products.find(p=>p.id===id):catalog.categories.find(c=>c.id===id);obj=obj||{};$('#dialog-title').textContent=(id?'تعديل ':'إضافة ')+(t==='product'?'منتج':'قسم');let s='';
 if(t==='product'){
+ s+='<div class="form-section-title">١. بيانات المنتج الأساسية</div>';
  const cond=id?conditionOf(obj):'new';
  const choice=(v,title)=>'<option value="'+v+'" '+(cond===v?'selected':'')+'>'+title+'</option>';
- s+=field('name','اسم المنتج',obj.name)+field('brand','الماركة',obj.brand)+field('category','القسم',obj.category||catalog.categories[0].id,'select')+field('sub','التصنيف الفرعي',obj.sub)+field('variant','النسخة أو السعة',obj.variant)+field('imagefile','صورة المنتج',null,'file')+field('description','الوصف',obj.description,'textarea','wide');
+ s+=field('name','اسم المنتج',obj.name)+field('brand','الماركة',obj.brand)+field('category','القسم',obj.category||catalog.categories[0].id,'select')+field('sub','التصنيف الفرعي',obj.sub)+field('variant','النسخة أو السعة',obj.variant)+field('imagefile','صورة المنتج',null,'file')+'<div class="field"><label>معاينة الصورة</label><img id="editor-image-preview" src="'+escape(photo(obj.image||'iphone15.png'))+'" alt="معاينة الصورة" style="width:100%;height:135px;object-fit:contain;background:#f5f8fc;border:1px solid #dfe8f3;border-radius:11px;padding:7px"></div>'+field('description','الوصف',obj.description,'textarea','wide');
+ s+='<div class="form-section-title">٢. حالة الجهاز والأسعار</div>';
  s+='<div class="field wide"><label for="product-condition">حالة الجهاز</label><select id="product-condition" name="condition" required>'+choice('new','جديد')+choice('used','مستعمل')+(id&&cond==='both'?choice('both','جديد ومستعمل (منتج قديم)'):'')+'</select><p class="hint">المنتج الجديد يظهر كعرض واحد فقط. المستعمل تظهر له نسبة النظافة.</p></div>';
  s+='<div class="field wide" id="cleanliness-field"><label for="cleanliness-input">نسبة نظافة الجهاز (من 100%)</label><input id="cleanliness-input" name="cleanliness" type="number" min="1" max="100" step="1" value="'+escape(obj.cleanliness??100)+'"><p class="hint">تقييم للنظافة والحالة الخارجية، وليس نسبة صحة البطارية.</p></div>';
  s+='<div id="new-price-fields" class="condition-price-fields">'+field('newmin','سعر الجديد من',obj.prices?.new?.[0]??0,'number')+field('newmax','سعر الجديد إلى',obj.prices?.new?.[1]??0,'number')+'</div>';
  s+='<div id="used-price-fields" class="condition-price-fields">'+field('usedmin','سعر المستعمل من',obj.prices?.used?.[0]??0,'number')+field('usedmax','سعر المستعمل إلى',obj.prices?.used?.[1]??0,'number')+'</div>';
+ s+='<div class="form-section-title">٣. المواصفات والنشر</div>';
  s+=field('specs','المواصفات: كل سطر «العنوان: القيمة»',(obj.specs||[]).map(x=>x.join(': ')).join('\n'),'textarea','wide')+'<div class="field"><label><input name="active" type="checkbox" '+(obj.active!==false?'checked':'')+'> المنتج ظاهر في المتجر</label></div>';
 }
 else s+=field('title','اسم القسم',obj.title)+field('short','الاسم المختصر',obj.short)+field('sub','الوصف',obj.sub)+field('line','الجملة الترويجية',obj.line)+field('imagefile','صورة القسم',null,'file');
-$('#fields').innerHTML=s;$('#modal').classList.add('show');if(t==='product'){$('#product-condition').addEventListener('change',toggleConditionFields);toggleConditionFields()}}
+$('#fields').innerHTML=s;$('#modal').classList.add('show');if(t==='product'){$('#product-condition').addEventListener('change',toggleConditionFields);toggleConditionFields();const file=$('#fields input[name=imagefile]');file.onchange=e=>{const photo=e.target.files?.[0];if(photo){const url=URL.createObjectURL(photo);const preview=$('#editor-image-preview');preview.onload=()=>URL.revokeObjectURL(url);preview.src=url}}}}
 function close(){$('#modal').classList.remove('show')}$('#close').onclick=close;$('#cancel').onclick=close;
 async function upload(f){if(!f||!f.size)return null;if(f.size>2000000)throw Error('حجم الصورة يجب ألا يتجاوز 2 ميغابايت');let ext=(f.name.split('.').pop()||'').toLowerCase();if(!['png','jpg','jpeg','webp'].includes(ext))throw Error('استخدم PNG أو JPG أو WebP');let b64=await new Promise((ok,bad)=>{let reader=new FileReader();reader.onload=()=>ok(String(reader.result).split(',')[1]);reader.onerror=bad;reader.readAsDataURL(f)});return(await request('upload',{image:{ext:ext,data:b64}})).image}
 $('#editor').onsubmit=async e=>{e.preventDefault();let btn=$('#editor button[type=submit]');btn.disabled=true;btn.textContent='جارٍ الحفظ...';try{
