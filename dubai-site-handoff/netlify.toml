@@ -6,7 +6,7 @@
   node_bundler = "esbuild"
 [[redirects]]
   from = "/api/data"
-  to = "/.netlify/functions/api"
+  to = "/.netlify/functions/api-modern"
   status = 200
 [[redirects]]
   from = "/products/*"
