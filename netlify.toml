@@ -1,0 +1,18 @@
+[build]
+  publish = "dubai-site-handoff/dist"
+  command = "node install-admin.cjs"
+  functions = "dubai-site-handoff/netlify/functions"
+[functions]
+  node_bundler = "esbuild"
+[[redirects]]
+  from = "/api/data"
+  to = "/.netlify/functions/api"
+  status = 200
+[[redirects]]
+  from = "/products/*"
+  to = "/product-template/"
+  status = 200
+[[redirects]]
+  from = "/*"
+  to = "/category-template/"
+  status = 200
