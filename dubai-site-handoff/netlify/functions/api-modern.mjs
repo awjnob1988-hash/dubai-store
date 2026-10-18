@@ -67,9 +67,13 @@ let mime=blob.ext==='png'?'image/png':blob.ext==='webp'?'image/webp':'image/jpeg
 await pictures().set(name,new Blob([bin],{type:mime}));return response(200,{image:name});
 }
 if(method==='POST'&&action==='publish'){
-validate(body.catalog);let prev=await current();if(prev.version!==body.version)return error(409,'تغيرت بيانات المتجر من جهاز آخر، حدّث الصفحة ثم جرّب');
+try{validate(body.catalog)}catch(e){return error(422,String(e?.message||'تفاصيل المنتج غير صالحة').slice(0,130))}
+let prev=await current();if(prev.version!==body.version)return error(409,'تغيرت بيانات المتجر من جهاز آخر، حدّث الصفحة ثم جرّب');
 let old=await data().getWithMetadata('live',{type:'json',consistency:'strong'});
-let result=await data().set('live',JSON.stringify(body.catalog),old?{onlyIfMatch:old.etag}:{onlyIfNew:true});if(!result.modified)return error(409,'يوجد تعديل أحدث، حدّث الصفحة');
+let result;
+try{result=await data().setJSON('live',body.catalog,old?{onlyIfMatch:old.etag}:{onlyIfNew:true})}
+catch(e){console.error('Dubai admin publish failed:',e);const kind=String(e?.name||'StorageError').replace(/[^a-zA-Z0-9_]/g,'').slice(0,50);return error(500,'تعذر حفظ المنتج في التخزين ('+kind+')')}
+if(!result.modified)return error(409,'يوجد تعديل أحدث، حدّث الصفحة');
 return response(200,{success:true,version:result.etag});
 }
 return error(404,'طلب غير معروف');
