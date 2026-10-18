@@ -31,6 +31,14 @@ if(!id(p.id)||prods.has(p.id)||!cats.has(p.category)||!['name','brand','sub','im
 for(const z of ['new','used'])if(!Array.isArray(p.prices[z])||p.prices[z].length!==2||p.prices[z].some(n=>!Number.isSafeInteger(n)||n<0||n>1000000000)||p.prices[z][1]<p.prices[z][0])throw Error('السعر غير صالح');
 if(!p.specs.every(x=>Array.isArray(x)&&x.length===2&&x.every(clean)))throw Error('المواصفات غير صالحة');
 if(!/^([a-zA-Z0-9_-]+\.(png|jpg|jpeg|webp|gif)|uploads\/[a-z0-9-]{15,55}\.(png|jpg|jpeg|webp|gif))$/i.test(p.image))throw Error('صورة غير صالحة');
+// Old items are compatible with both-condition pricing. New entries declare one condition.
+if(p.condition!==undefined&&!['new','used','both'].includes(p.condition))throw Error('حالة المنتج غير صالحة');
+if(p.condition==='new'||p.condition==='used'){
+ const [min,max]=p.prices[p.condition];
+ if(min<1||max<min)throw Error('سعر الجهاز غير صالح');
+ if(p.condition==='used'&&(!Number.isInteger(p.cleanliness)||p.cleanliness<1||p.cleanliness>100))throw Error('نسبة نظافة المستعمل يجب أن تكون من 1 إلى 100');
+ if(p.condition==='new'&&p.cleanliness!==undefined)throw Error('نسبة النظافة للمستعمل فقط');
+}
 prods.add(p.id);
 }
 if(c.site!==undefined){if(!c.site||typeof c.site!=='object'||!Object.values(c.site).every(clean))throw Error('إعدادات الموقع غير صالحة');if(c.site.whatsapp&&!/^\d{10,15}$/.test(c.site.whatsapp))throw Error('رقم واتساب غير صالح');}
