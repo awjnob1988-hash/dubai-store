@@ -66,7 +66,21 @@ if(view==='media'){
  out+='<form id="media-form"><div class="setting-block"><h3>الصورة الرئيسية</h3><div class="setting-grid"><div class="field"><label for="hero-image">رفع صورة جديدة</label><input id="hero-image" name="hero" type="file" accept="image/png,image/jpeg,image/webp"><p class="hint">PNG أو JPG أو WebP، بحجم أقل من 2 ميغابايت</p></div><div class="field"><label>معاينة الصورة الحالية</label><img id="hero-preview" alt="صورة واجهة المتجر" src="'+escape(photo(img||'iphone15.png'))+'" style="height:180px;width:100%;object-fit:contain;border:1px solid #e4eaf2;border-radius:12px;background:#fff;padding:10px"></div></div><p class="panel-note">إذا ما رفعت صورة جديدة، يبقى التصميم كما هو.</p></div><div class="setting-actions"><button class="primary" type="submit">حفظ صورة الواجهة ←</button></div></form></section>';
 }
 $('#content').innerHTML=out;
-if($('#import-legacy'))$('#import-legacy').onclick=async()=>{if(!confirm('تريد تنسخ المنتجات والصور من موقع Netlify إلى Cloudflare؟ يتم الاستيراد مرة واحدة، ولن يحذف بيانات موقعك القديم.'))return;const btn=$('#import-legacy');btn.disabled=true;btn.textContent='جارٍ استيراد المنتجات والصور...';try{const x=await request('import',{});await load();note('نجح الاستيراد: '+x.products+' منتج و'+x.images+' صورة')}catch(e){btn.disabled=false;btn.textContent='إعادة محاولة الاستيراد';note(e.message,true)}};
+if($('#import-legacy'))$('#import-legacy').onclick=async()=>{
+ const btn=$('#import-legacy');
+ btn.disabled=true;btn.textContent='جارٍ فحص بيانات الموقع القديم...';
+ try{
+   const check=await request('import-preflight',{});
+   if(!confirm('وجدنا '+check.products+' منتج و'+check.categories+' قسم و'+check.images+' صورة مرفوعة. هل تريد نسخها إلى Cloudflare الآن؟\nلن تتغير بيانات موقع Netlify القديم.')){btn.disabled=false;btn.textContent='استيراد المنتجات والصور من الموقع القديم ←';return}
+   btn.textContent='جارٍ نقل المنتجات والصور، انتظر...';
+   const result=await request('import',{});
+   await load();
+   note('نجح الاستيراد: '+result.products+' منتج و'+result.images+' صورة');
+ }catch(err){
+   btn.disabled=false;btn.textContent='إعادة فحص ومحاولة الاستيراد';
+   note(err.message,true);
+ }
+};
 if($('#quick-product'))$('#quick-product').onclick=()=>open('product');
 if($('#quick-category'))$('#quick-category').onclick=()=>open('category');
 if($('#add-product'))$('#add-product').onclick=()=>open('product');
