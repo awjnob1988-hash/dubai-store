@@ -4,7 +4,14 @@ const {getStore}=require('@netlify/blobs');
 const original=require('../../dubai-site-handoff/catalog.json');
 const data=()=>getStore({name:'dubai-store-products',consistency:'strong'});
 const pictures=()=>getStore({name:'dubai-store-pictures',consistency:'strong'});
-const env=()=>({user:process.env.ADMIN_USERNAME||'admin',pass:process.env.ADMIN_PASSWORD||'',key:process.env.ADMIN_SESSION_SECRET||''});
+// Resolve both Netlify's modern runtime API and classic Lambda environment variables.
+const envValue=name=>{
+  const v=process.env[name];
+  if(typeof v==='string'&&v.length>0)return v;
+  try{const value=globalThis.Netlify?.env?.get?.(name);if(typeof value==='string')return value;}catch{}
+  return '';
+};
+const env=()=>({user:envValue('ADMIN_USERNAME')||'admin',pass:envValue('ADMIN_PASSWORD'),key:envValue('ADMIN_SESSION_SECRET')});
 const response=(statusCode,obj)=>({statusCode,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'},body:JSON.stringify(obj)});
 const error=(code,message)=>response(code,{error:message});
 const same=(a,b)=>crypto.timingSafeEqual(crypto.createHash('sha256').update(String(a)).digest(),crypto.createHash('sha256').update(String(b)).digest());
@@ -38,8 +45,12 @@ let b=await pictures().get(file,{type:'arrayBuffer'});if(!b)return error(404,'ا
 let type=/\.png$/i.test(file)?'image/png':/\.webp$/i.test(file)?'image/webp':/\.gif$/i.test(file)?'image/gif':'image/jpeg';
 return{statusCode:200,isBase64Encoded:true,headers:{'Content-Type':type,'Cache-Control':'public, max-age=3600','X-Content-Type-Options':'nosniff'},body:Buffer.from(b).toString('base64')};
 }
-if(method==='GET'&&action==='status')return response(200,{configured:conf.pass.length>=12&&conf.key.length>=32});
-if(conf.pass.length<12||conf.key.length<32)return error(503,'يجب إعداد بيانات المدير على Netlify');
+if(method==='GET'&&action==='status'){
+let storage='ok';
+try{await current()}catch(e){storage='error';console.error('Dubai admin store health:',e)}
+return response(200,{configured:conf.pass.length>=12&&conf.key.length>=32,passwordReady:conf.pass.length>=12,sessionReady:conf.key.length>=32,storage});
+}
+if(conf.pass.length<12||conf.key.length<32)return error(503,'بيانات الحماية غير متاحة للوظيفة الخلفية؛ تأكد من كلمة مرور 12 حرفاً ورمز جلسة 32 حرفاً وصلاحية Functions ثم أعد النشر');
 let body={};if(method==='POST'){if((ev.body||'').length>5900000)return error(413,'حجم الملف كبير');try{body=JSON.parse(ev.body||'{}')}catch{return error(400,'الطلب غير صالح')}}
 if(method==='POST'&&action==='login'){if(!same(body.username||'',conf.user)||!same(body.password||'',conf.pass))return error(401,'اسم المستخدم أو كلمة المرور غير صحيحة');return response(200,{token:sign(conf)})}
 if(!authorized(ev,conf))return error(401,'يرجى تسجيل الدخول');
