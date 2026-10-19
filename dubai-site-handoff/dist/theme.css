@@ -1,0 +1,150 @@
+/* Dubai Store theme controls — loaded after style.css and shop.css.
+   Default is the original daylight styling; overrides apply only in dark mode. */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:7px;flex-shrink:0;min-height:40px;padding:7px 12px;border:1px solid #a5b7ce;border-radius:24px;background:#ffffffd6;color:#194373;font:600 12px 'Hayyakum',Arial,sans-serif;white-space:nowrap;transition:background-color .2s ease,border-color .2s ease,color .2s ease}
+.theme-toggle:hover{background:#edf3ff;border-color:#668bc3}
+.theme-toggle .theme-icon{display:inline-grid;place-items:center;width:17px;height:18px;font:22px Arial,sans-serif}
+.theme-toggle:focus-visible{outline:3px solid #f5811f;outline-offset:3px}
+@media(max-width:760px){.theme-toggle{min-height:33px;padding:4px 9px;font-size:11px;gap:5px}.theme-toggle .theme-icon{font-size:19px}}
+@media(max-width:370px){.theme-toggle .theme-word{display:none}.theme-toggle{width:33px;padding:4px}}
+html[data-theme="dark"]{
+color-scheme:dark;
+--blue:#9ec5ff;
+--navy:#dceaff;
+--ink:#eaf2ff;
+--muted:#adbed4;
+--line:#344a62;
+--shop-surface:#17283bec;
+}
+html[data-theme="dark"] body{background:#0c1625;color:var(--ink)}
+html[data-theme="dark"] .ambient{background:linear-gradient(123deg,#0a1423,#112943 53%,#1b2338)}
+html[data-theme="dark"] .ambient i{background:linear-gradient(90deg,#1b3d6340,#2b56804a 44%,#52739c22 82%,#0d294254);box-shadow:none;opacity:.75}
+html[data-theme="dark"] .ambient i:nth-child(5){background:linear-gradient(90deg,#112b466b,#3e49684d,#13274060)}
+html[data-theme="dark"] .top{color:#b4cfff}
+html[data-theme="dark"] .floating-header{background:#182b42ee;border-color:#3a5268;box-shadow:0 14px 40px #040a1680}
+html[data-theme="dark"] .floating-header .brand b{color:#f4f8ff}
+html[data-theme="dark"] .floating-header .brand small,
+html[data-theme="dark"] .brand small{color:#b4c6db}
+html[data-theme="dark"] nav,html[data-theme="dark"] nav a{color:#dce9fa}
+html[data-theme="dark"] nav a.active,html[data-theme="dark"] .floating-header nav a:hover,
+html[data-theme="dark"] .nav-dropdown.current summary{color:#acd0ff}
+html[data-theme="dark"] .outline,
+html[data-theme="dark"] .motion-toggle,
+html[data-theme="dark"] .theme-toggle{background:#1a334e;border-color:#466385;color:#f0f7ff}
+html[data-theme="dark"] .theme-toggle:hover{background:#294b6e;border-color:#7ca3d0}
+html[data-theme="dark"] .all-departments summary{color:#e0edff}
+html[data-theme="dark"] .mega-panel,
+html[data-theme="dark"] .dropdown-panel{background:#1b3049fa;border:1px solid #3d536b;box-shadow:0 30px 65px #050c1c9a}
+html[data-theme="dark"] .mega-panel>div{border-color:#39526d}
+html[data-theme="dark"] .mega-panel a,
+html[data-theme="dark"] .dropdown-panel a{color:#e1ebfa}
+html[data-theme="dark"] .mega-panel .mega-title{color:#a7d0ff}
+html[data-theme="dark"] .dropdown-panel a:hover,
+html[data-theme="dark"] .dropdown-panel a:focus-visible{background:#2b4562;color:#fff}
+html[data-theme="dark"] .category-bar a{color:#d6e4f7}
+html[data-theme="dark"] .category-bar .selected,
+html[data-theme="dark"] .eyebrow,html[data-theme="dark"] .kicker{color:#a5caff}
+html[data-theme="dark"] .hero h1,html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,html[data-theme="dark"] h3{color:#f0f6ff}
+html[data-theme="dark"] h1 em{color:#9dc7ff}
+html[data-theme="dark"] .hero p,
+html[data-theme="dark"] .category-intro p{color:#b5c7de}
+html[data-theme="dark"] .btn,
+html[data-theme="dark"] .tabs .selected,
+html[data-theme="dark"] .shelf-tabs .selected,
+html[data-theme="dark"] .condition-choices .selected,
+html[data-theme="dark"] .department-links a.selected{background:#2f65b5;color:#fff;border-color:#2f65b5}
+html[data-theme="dark"] .btn:hover{background:#3d77cf}
+html[data-theme="dark"] .text-link{color:#d9e9ff}
+html[data-theme="dark"] .hero-art{background:linear-gradient(142deg,#1d334b99,#0f2035aa);border-color:#3a526c}
+html[data-theme="dark"] .orbit{border-color:#3c5974}
+html[data-theme="dark"] .hero-real{mix-blend-mode:normal}
+html[data-theme="dark"] .art-caption,
+html[data-theme="dark"] .art-index{color:#b6c6db}
+html[data-theme="dark"] .art-label{background:#213955ed;color:#f4f7ff;box-shadow:0 15px 40px #030e1c80}
+html[data-theme="dark"] .art-label small{color:#b7cbe4}
+html[data-theme="dark"] .art-label>span{background:#4b3a32;color:#ffc07e}
+html[data-theme="dark"] .values{border-color:#354b62;background:#17283d9c}
+html[data-theme="dark"] .values b{color:#f0f4fc}
+html[data-theme="dark"] .category-tiles a,
+html[data-theme="dark"] .quick-access a{background:#1a2b42e6;border-color:#324b65;color:#f1f6ff}
+html[data-theme="dark"] .category-tiles a:hover,
+html[data-theme="dark"] .quick-access a:hover{background:#263e59}
+html[data-theme="dark"] .category-tiles img,
+html[data-theme="dark"] .category-intro>img{mix-blend-mode:normal}
+html[data-theme="dark"] .home-note .shop-notice{background:#1b3046d9}
+html[data-theme="dark"] .shop-notice{color:#b9c8da}
+html[data-theme="dark"] .shelf,
+html[data-theme="dark"] .shop-page,
+html[data-theme="dark"] .collection,
+html[data-theme="dark"] #sell,
+html[data-theme="dark"] #branches{background:#15283cee;border:1px solid #2c425b}
+html[data-theme="dark"] .shelf-heading>a,
+html[data-theme="dark"] .category-tiles span{color:#a8cdff}
+html[data-theme="dark"] .shelf-tabs button,
+html[data-theme="dark"] .shelf-controls button,
+html[data-theme="dark"] .shelf-conditions button.selected,
+html[data-theme="dark"] .tabs button,
+html[data-theme="dark"] .condition-choices button,
+html[data-theme="dark"] .department-links a,
+html[data-theme="dark"] #reset-filters{background:#213955;color:#dbeaff;border:1px solid #3a536e}
+html[data-theme="dark"] .shelf-tabs button.selected,
+html[data-theme="dark"] .tabs button.selected,
+html[data-theme="dark"] .condition-choices button.selected{background:#2f65b5;color:#fff;border-color:#2f65b5}
+html[data-theme="dark"] .shelf-conditions button:not(.selected){background:transparent;color:#c0cfe0}
+html[data-theme="dark"] .shelf-controls button:hover,
+html[data-theme="dark"] .shelf-tabs button:hover{background:#325070}
+html[data-theme="dark"] .product{background:#1a2b40;border-color:#3a5069}
+html[data-theme="dark"] .product .product-info,
+html[data-theme="dark"] .product-info{background:#192d43;color:#e9f3ff}
+html[data-theme="dark"] .product .photo-art,
+html[data-theme="dark"] .product-art,
+html[data-theme="dark"] .detail-photo,
+html[data-theme="dark"] .product-detail-layout .detail-photo{background:#eaf0f7;border-color:#59708a}
+html[data-theme="dark"] .product h3>a{color:#f1f6ff}
+html[data-theme="dark"] .product .product-info .category{color:#b5c8de}
+html[data-theme="dark"] .product .details-btn,
+html[data-theme="dark"] .details-btn{background:#2a4464;color:#e8f2ff}
+html[data-theme="dark"] .product .whatsapp-link{color:#aad0ff}
+html[data-theme="dark"] .product .price-range,
+html[data-theme="dark"] .price-range{color:#a5ceff}
+html[data-theme="dark"] .cleanliness-label{background:#163c48;color:#b2f3e9;border-color:#36727c}
+html[data-theme="dark"] .cleanliness-detail{background:#203a4a;border-color:#486778;color:#c9eaf4}
+html[data-theme="dark"] .cleanliness-detail small{color:#b8d1dd}
+html[data-theme="dark"] .promo-banner{border:1px solid #40618d}
+html[data-theme="dark"] .breadcrumbs{color:#b0c1d5}
+html[data-theme="dark"] .catalog-controls{background:#1e344c}
+html[data-theme="dark"] .catalog-controls .search,
+html[data-theme="dark"] .search,
+html[data-theme="dark"] .catalog-search{background:#233a54;border-color:#3b5774;color:#ebf3ff}
+html[data-theme="dark"] .search input,
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea{color:#eef5ff}
+html[data-theme="dark"] .catalog-controls select,
+html[data-theme="dark"] .brand-filter select,
+html[data-theme="dark"] form input,
+html[data-theme="dark"] form select,
+html[data-theme="dark"] form textarea{background:#21374f;color:#f1f6ff;border:1px solid #48617d}
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder{color:#a9bacd;opacity:1}
+html[data-theme="dark"] option{background:#21374f;color:#f1f6ff}
+html[data-theme="dark"] .detail-price{background:#253a54;border:1px solid #395773}
+html[data-theme="dark"] .detail-info dd{color:#e6f0fd}
+html[data-theme="dark"] .back-category{color:#b8cce2}
+html[data-theme="dark"] .condition-choices .single-condition{background:#21493e;color:#d1f8e9}
+html[data-theme="dark"] .branch-grid article{background:#192f46;border-color:#38526c}
+html[data-theme="dark"] .pin{background:#2c435e;color:#b8d7ff}
+html[data-theme="dark"] form{background:#1d314a;color:#ecf4ff}
+html[data-theme="dark"] form label{color:#dbe7f5}
+html[data-theme="dark"] .steps b{color:#dae9ff}
+html[data-theme="dark"] .sell p{color:#b6c8dc}
+html[data-theme="dark"] .empty{background:#253b54;color:#d7e7f7}
+html[data-theme="dark"] .close-dialog{background:#294564;color:#eff7ff}
+html[data-theme="dark"] dialog{background:#1b3048;color:#edf4ff;border:1px solid #3d5976}
+html[data-theme="dark"] .photo-caption{color:#3e5672}
+html[data-theme="dark"] footer{background:#0a1930}
+html[data-theme="dark"] .float-wa{background:#2f65b5;color:white}
+html[data-theme="dark"] .shelf,.shop-page,
+html[data-theme="dark"] .product-info,
+html[data-theme="dark"] .floating-header{transition:background-color .2s ease,border-color .2s ease,color .2s ease}
+@media(prefers-reduced-motion:reduce){.theme-toggle,html[data-theme="dark"] .shelf,html[data-theme="dark"] .product-info,html[data-theme="dark"] .floating-header{transition:none}}
